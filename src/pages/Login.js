@@ -49,6 +49,7 @@ class Login extends React.Component {
           data-testid="btn-play"
           type="button"
           disabled={ button }
+          onClick={ createToken }
         >
           Play
         </button>
