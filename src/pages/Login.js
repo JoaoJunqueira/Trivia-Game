@@ -17,6 +17,7 @@ class Login extends React.Component {
   validateButton = () => {
     const { name, email } = this.state;
 
+    // Referência: Aula do Fernando sobre Regex
     const regex = /^(\w|\.)+@[a-z]+\.com$/gm;
 
     const isEmailOk = email.match(regex);
