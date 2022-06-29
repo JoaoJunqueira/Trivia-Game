@@ -1,37 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { addPlayerInfoAction } from '../redux/actions';
 
 class Login extends React.Component {
-  state={
+  state = {
     name: '',
     email: '',
     button: true,
-  }
+  };
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value }, this.validateButton);
-  }
+  };
 
   validateButton = () => {
     const { name, email } = this.state;
-    if (name.length !== 0 && email.length !== 0) {
+
+    const regex = /^(\w|\.)+@[a-z]+\.com$/gm;
+
+    const isEmailOk = email.match(regex);
+
+    if (name.length !== 0 && isEmailOk) {
       return this.setState({ button: false });
     }
     return this.setState({ button: true });
-  }
+  };
 
-  createToken = async () => {
-    const api = await fetch('https://opentdb.com/api_token.php?command=request');
+  handleClickPlay = async () => {
+    const { history, dispatch } = this.props;
+    const { name, email } = this.state;
+
+    const api = await fetch(
+      'https://opentdb.com/api_token.php?command=request',
+    );
     const res = await api.json();
-    localStorage.setItem('token', res.token);
-    const { history } = this.props;
-    history.push('/game');
-  }
 
-  handleSettings = () => {
+    localStorage.setItem('token', res.token);
+
+    history.push('/game');
+
+    dispatch(addPlayerInfoAction(name, email));
+  };
+
+  handleClickSettings = () => {
     const { history } = this.props;
     history.push('/settings');
-  }
+  };
 
   render() {
     const { button, name, email } = this.state;
@@ -63,14 +78,14 @@ class Login extends React.Component {
           data-testid="btn-play"
           type="button"
           disabled={ button }
-          onClick={ this.createToken }
+          onClick={ this.handleClickPlay }
         >
           Play
         </button>
         <button
           data-testid="btn-settings"
           type="button"
-          onClick={ this.handleSettings }
+          onClick={ this.handleClickSettings }
         >
           Settings
         </button>
@@ -81,6 +96,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default Login;
+export default connect()(Login);
