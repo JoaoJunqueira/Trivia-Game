@@ -9,6 +9,8 @@ class Game extends React.Component {
     answers: [],
     sortIndex: [],
     answersResult: false,
+    timer: 30,
+    isButtonDisabled: false,
   };
 
   async componentDidMount() {
@@ -35,6 +37,7 @@ class Game extends React.Component {
     }
 
     this.shuffleArray();
+    this.countdownTimer();
   }
 
   shuffleArray = () => {
@@ -53,7 +56,7 @@ class Game extends React.Component {
   };
 
   handleClick = () => {
-    this.setState({ answersResult: true });
+    this.setState({ answersResult: true, isButtonDisabled: true });
   };
 
   handleClickNext = () => {
@@ -68,6 +71,8 @@ class Game extends React.Component {
           ...results[prevState.index + 1].incorrect_answers,
         ],
         answersResult: false,
+        timer: 30,
+        isButtonDisabled: false,
       }),
       this.shuffleArray,
     );
@@ -78,8 +83,38 @@ class Game extends React.Component {
     }
   };
 
+  countdownTimer = () => {
+    const ONE_SECOND = 1000;
+
+    setInterval(
+      () => this.setState(
+        (prevState) => ({
+          timer: prevState.timer > 0 ? prevState.timer - 1 : 0,
+        }),
+        () => {
+          const { timer } = this.state;
+          if (timer === 0) {
+            this.setState({
+              isButtonDisabled: true,
+              answersResult: true,
+            });
+          }
+        },
+      ),
+      ONE_SECOND,
+    );
+  };
+
   render() {
-    const { results, index, sortIndex, answers, answersResult } = this.state;
+    const {
+      results,
+      index,
+      sortIndex,
+      answers,
+      answersResult,
+      isButtonDisabled,
+      timer,
+    } = this.state;
     const rightAnswer = answers[0];
 
     return (
@@ -88,6 +123,7 @@ class Game extends React.Component {
         {results.length > 0 && (
           <div>
             <h1>Trivia</h1>
+            <p>{timer}</p>
             <h2 data-testid="question-text">{results[index].question}</h2>
             <h3 data-testid="question-category">{results[index].category}</h3>
             <div data-testid="answer-options">
@@ -98,6 +134,7 @@ class Game extends React.Component {
                   type="button"
                   onClick={ this.handleClick }
                   className={ answersResult ? 'green-border' : '' }
+                  disabled={ isButtonDisabled }
                 >
                   {answers[ind]}
                 </button>
@@ -108,6 +145,7 @@ class Game extends React.Component {
                   type="button"
                   onClick={ this.handleClick }
                   className={ answersResult ? 'red-border' : '' }
+                  disabled={ isButtonDisabled }
                 >
                   {answers[ind]}
                 </button>
