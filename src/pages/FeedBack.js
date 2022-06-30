@@ -12,6 +12,25 @@ class FeedBack extends React.Component {
   goToRanking = () => {
     const { history } = this.props;
     history.push('/ranking');
+    this.savePlayersResult();
+  }
+
+  savePlayersResult = () => {
+    const { name, score, email } = this.props;
+    const localStorageData = localStorage.getItem('ranking');
+    const player = {
+      name, score, email,
+    };
+    if (!localStorageData) {
+      const playerJson = JSON.stringify([player]);
+      localStorage.setItem('ranking', playerJson);
+    } else {
+      const previousRanking = localStorage.getItem('ranking');
+      const rankingOk = JSON.parse(previousRanking);
+      const newRanking = [...rankingOk, player];
+      const finalRanking = JSON.stringify(newRanking);
+      localStorage.setItem('ranking', finalRanking);
+    }
   }
 
   render() {
@@ -50,6 +69,8 @@ class FeedBack extends React.Component {
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
   score: state.player.score,
+  email: state.player.gravatarEmail,
+  name: state.player.name,
 });
 
 FeedBack.propTypes = {
