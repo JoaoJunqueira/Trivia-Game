@@ -8,6 +8,7 @@ class Game extends React.Component {
     index: 0,
     answers: [],
     sortIndex: [],
+    answersResult: false,
   };
 
   async componentDidMount() {
@@ -51,8 +52,12 @@ class Game extends React.Component {
     this.setState({ sortIndex });
   };
 
+  handleClick = () => {
+    this.setState({ answersResult: true });
+  }
+
   render() {
-    const { results, index, sortIndex, answers } = this.state;
+    const { results, index, sortIndex, answers, answersResult } = this.state;
     const rightAnswer = answers[0];
 
     return (
@@ -64,19 +69,28 @@ class Game extends React.Component {
             <h2 data-testid="question-text">{results[index].question}</h2>
             <h3 data-testid="question-category">{results[index].category}</h3>
             <div data-testid="answer-options">
-              {sortIndex.map((ind, i) => (answers[ind] === rightAnswer ? (
-                <button data-testid="correct-answer" key={ i } type="button">
-                  {answers[ind]}
-                </button>
-              ) : (
-                <button
-                  data-testid={ `wrong-answer-${i}` }
-                  key={ i }
-                  type="button"
-                >
-                  {answers[ind]}
-                </button>
-              )))}
+              {sortIndex.map((ind, i) => (answers[ind] === rightAnswer
+                ? (
+                  <button
+                    data-testid="correct-answer"
+                    key={ i }
+                    type="button"
+                    onClick={ this.handleClick }
+                    className={ answersResult ? 'green-border' : '' }
+                  >
+                    {answers[ind]}
+                  </button>
+                ) : (
+                  <button
+                    data-testid={ `wrong-answer-${i}` }
+                    key={ i }
+                    type="button"
+                    onClick={ this.handleClick }
+                    className={ answersResult ? 'red-border' : '' }
+                  >
+                    {answers[ind]}
+                  </button>
+                )))}
             </div>
           </div>
         )}
