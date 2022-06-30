@@ -1,4 +1,4 @@
-import { ADD_PLAYER_INFO } from '../actions';
+import { ADD_PLAYER_INFO, SUM_SCORE } from '../actions/index';
 
 const INITIAL_STATE = {
   name: '',
@@ -14,6 +14,12 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       name: action.payload.name,
       gravatarEmail: action.payload.email,
+    };
+  case SUM_SCORE:
+    return {
+      ...state,
+      score: state.score + action.payload,
+      assertions: state.assertions + 1,
     };
   default:
     return state;
