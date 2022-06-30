@@ -54,7 +54,29 @@ class Game extends React.Component {
 
   handleClick = () => {
     this.setState({ answersResult: true });
-  }
+  };
+
+  handleClickNext = () => {
+    const { results, index } = this.state;
+    const { history } = this.props;
+
+    this.setState(
+      (prevState) => ({
+        index: prevState.index + 1,
+        answers: [
+          results[prevState.index + 1].correct_answer,
+          ...results[prevState.index + 1].incorrect_answers,
+        ],
+        answersResult: false,
+      }),
+      this.shuffleArray,
+    );
+
+    const quatro = 4;
+    if (index >= quatro) {
+      history.push('/feedback');
+    }
+  };
 
   render() {
     const { results, index, sortIndex, answers, answersResult } = this.state;
@@ -69,28 +91,36 @@ class Game extends React.Component {
             <h2 data-testid="question-text">{results[index].question}</h2>
             <h3 data-testid="question-category">{results[index].category}</h3>
             <div data-testid="answer-options">
-              {sortIndex.map((ind, i) => (answers[ind] === rightAnswer
-                ? (
-                  <button
-                    data-testid="correct-answer"
-                    key={ i }
-                    type="button"
-                    onClick={ this.handleClick }
-                    className={ answersResult ? 'green-border' : '' }
-                  >
-                    {answers[ind]}
-                  </button>
-                ) : (
-                  <button
-                    data-testid={ `wrong-answer-${i}` }
-                    key={ i }
-                    type="button"
-                    onClick={ this.handleClick }
-                    className={ answersResult ? 'red-border' : '' }
-                  >
-                    {answers[ind]}
-                  </button>
-                )))}
+              {sortIndex.map((ind, i) => (answers[ind] === rightAnswer ? (
+                <button
+                  data-testid="correct-answer"
+                  key={ i }
+                  type="button"
+                  onClick={ this.handleClick }
+                  className={ answersResult ? 'green-border' : '' }
+                >
+                  {answers[ind]}
+                </button>
+              ) : (
+                <button
+                  data-testid={ `wrong-answer-${i}` }
+                  key={ i }
+                  type="button"
+                  onClick={ this.handleClick }
+                  className={ answersResult ? 'red-border' : '' }
+                >
+                  {answers[ind]}
+                </button>
+              )))}
+              {answersResult && (
+                <button
+                  data-testid="btn-next"
+                  type="button"
+                  onClick={ this.handleClickNext }
+                >
+                  Next
+                </button>
+              )}
             </div>
           </div>
         )}
