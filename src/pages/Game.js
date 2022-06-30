@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { sumScoreAction } from '../redux/actions/index';
 
 class Game extends React.Component {
   state = {
@@ -55,8 +57,13 @@ class Game extends React.Component {
     this.setState({ sortIndex });
   };
 
-  handleClick = () => {
+  handleClick = ({ target: { name } }) => {
+    const { dispatch } = this.props;
     this.setState({ answersResult: true, isButtonDisabled: true });
+    if (name === 'correct-answer') {
+      const sum = this.calculateScore();
+      dispatch(sumScoreAction(sum));
+    }
   };
 
   handleClickNext = () => {
@@ -105,6 +112,24 @@ class Game extends React.Component {
     );
   };
 
+  calculateScore = () => {
+    const { timer, results, index } = this.state;
+    const { difficulty } = results[index];
+    const ten = 10;
+    const easy = 1;
+    const medium = 2;
+    const hard = 3;
+    if (difficulty === 'hard') {
+      return ten + (timer * hard);
+    }
+    if (difficulty === 'medium') {
+      return ten + (timer * medium);
+    }
+    if (difficulty === 'easy') {
+      return ten + (timer * easy);
+    }
+  }
+
   render() {
     const {
       results,
@@ -135,6 +160,7 @@ class Game extends React.Component {
                   onClick={ this.handleClick }
                   className={ answersResult ? 'green-border' : '' }
                   disabled={ isButtonDisabled }
+                  name="correct-answer"
                 >
                   {answers[ind]}
                 </button>
@@ -169,6 +195,7 @@ class Game extends React.Component {
 
 Game.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default Game;
+export default connect()(Game);
