@@ -9,6 +9,11 @@ class FeedBack extends React.Component {
     history.push('/');
   }
 
+  goToRanking = () => {
+    const { history } = this.props;
+    history.push('/ranking');
+  }
+
   render() {
     const { assertions, score } = this.props;
     const three = 3;
@@ -28,6 +33,13 @@ class FeedBack extends React.Component {
             onClick={ this.handleClick }
           >
             Play Again
+          </button>
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.goToRanking }
+          >
+            Ranking
           </button>
         </div>
       </div>
