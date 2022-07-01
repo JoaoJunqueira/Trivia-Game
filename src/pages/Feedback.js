@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { resetPlayerAction } from '../redux/actions';
 
-class FeedBack extends React.Component {
+class Feedback extends React.Component {
   handleClick = () => {
     const { history, dispatch } = this.props;
     history.push('/');
@@ -55,11 +55,11 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
 });
 
-FeedBack.propTypes = {
+Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(FeedBack);
+export default connect(mapStateToProps)(Feedback);
