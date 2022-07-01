@@ -20,6 +20,8 @@ class Ranking extends React.Component {
   componentDidMount = () => {
     const data = localStorage.getItem('ranking');
     const ranking = JSON.parse(data);
+
+    // Referência: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
     const newRanking = ranking.sort((a, b) => {
       const num = -1;
       if (a.score > b.score) {
