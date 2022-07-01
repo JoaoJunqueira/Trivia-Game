@@ -6,15 +6,6 @@ import userEvent from '@testing-library/user-event';
 import { questionsResponse } from '../../../cypress/mocks/questions';
 import { tokenResponse } from '../../../cypress/mocks/token';
 
-const initialState = {
-  player: {
-    name: 'Tryber',
-    assertions: 2,
-    score: 162,
-    gravatarEmail: 'email@teste.com',
-  },
-};
-
 const mockFetch = (url) => {
   if (url === 'https://opentdb.com/api_token.php?command=request'){
     return Promise.resolve({

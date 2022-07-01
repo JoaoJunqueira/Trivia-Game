@@ -95,7 +95,9 @@ class Game extends React.Component {
     const { name, score, email } = this.props;
     const localStorageData = localStorage.getItem('ranking');
     const player = {
-      name, score, email,
+      name,
+      score,
+      email,
     };
     if (!localStorageData) {
       const playerJson = JSON.stringify([player]);
@@ -107,7 +109,7 @@ class Game extends React.Component {
       const finalRanking = JSON.stringify(newRanking);
       localStorage.setItem('ranking', finalRanking);
     }
-  }
+  };
 
   countdownTimer = () => {
     const ONE_SECOND = 1000;
@@ -139,15 +141,15 @@ class Game extends React.Component {
     const medium = 2;
     const hard = 3;
     if (difficulty === 'hard') {
-      return ten + (timer * hard);
+      return ten + timer * hard;
     }
     if (difficulty === 'medium') {
-      return ten + (timer * medium);
+      return ten + timer * medium;
     }
     if (difficulty === 'easy') {
-      return ten + (timer * easy);
+      return ten + timer * easy;
     }
-  }
+  };
 
   render() {
     const {
@@ -185,7 +187,9 @@ class Game extends React.Component {
                 </button>
               ) : (
                 <button
-                  data-testid={ `wrong-answer-${i}` }
+                  data-testid={ `wrong-answer-${results[
+                    index
+                  ].incorrect_answers.indexOf(answers[ind])}` }
                   key={ i }
                   type="button"
                   onClick={ this.handleClick }
