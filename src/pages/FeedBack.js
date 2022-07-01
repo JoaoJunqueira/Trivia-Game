@@ -2,35 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { resetPlayerAction } from '../redux/actions';
 
 class FeedBack extends React.Component {
   handleClick = () => {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
     history.push('/');
+    dispatch(resetPlayerAction());
   }
 
   goToRanking = () => {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
     history.push('/ranking');
-    this.savePlayersResult();
-  }
-
-  savePlayersResult = () => {
-    const { name, score, email } = this.props;
-    const localStorageData = localStorage.getItem('ranking');
-    const player = {
-      name, score, email,
-    };
-    if (!localStorageData) {
-      const playerJson = JSON.stringify([player]);
-      localStorage.setItem('ranking', playerJson);
-    } else {
-      const previousRanking = localStorage.getItem('ranking');
-      const rankingOk = JSON.parse(previousRanking);
-      const newRanking = [...rankingOk, player];
-      const finalRanking = JSON.stringify(newRanking);
-      localStorage.setItem('ranking', finalRanking);
-    }
+    dispatch(resetPlayerAction());
   }
 
   render() {
@@ -69,16 +53,13 @@ class FeedBack extends React.Component {
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
   score: state.player.score,
-  email: state.player.gravatarEmail,
-  name: state.player.name,
 });
 
 FeedBack.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps)(FeedBack);
