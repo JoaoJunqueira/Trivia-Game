@@ -1,4 +1,4 @@
-import { ADD_PLAYER_INFO, SUM_SCORE } from '../actions/index';
+import { ADD_PLAYER_INFO, SUM_SCORE, RESET_PLAYER } from '../actions/index';
 
 const INITIAL_STATE = {
   name: '',
@@ -21,6 +21,8 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       score: state.score + action.payload,
       assertions: state.assertions + 1,
     };
+  case RESET_PLAYER:
+    return INITIAL_STATE;
   default:
     return state;
   }

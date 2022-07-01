@@ -86,9 +86,28 @@ class Game extends React.Component {
 
     const quatro = 4;
     if (index >= quatro) {
+      this.savePlayersResult();
       history.push('/feedback');
     }
   };
+
+  savePlayersResult = () => {
+    const { name, score, email } = this.props;
+    const localStorageData = localStorage.getItem('ranking');
+    const player = {
+      name, score, email,
+    };
+    if (!localStorageData) {
+      const playerJson = JSON.stringify([player]);
+      localStorage.setItem('ranking', playerJson);
+    } else {
+      const previousRanking = localStorage.getItem('ranking');
+      const rankingOk = JSON.parse(previousRanking);
+      const newRanking = [...rankingOk, player];
+      const finalRanking = JSON.stringify(newRanking);
+      localStorage.setItem('ranking', finalRanking);
+    }
+  }
 
   countdownTimer = () => {
     const ONE_SECOND = 1000;
@@ -193,9 +212,18 @@ class Game extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  name: state.player.name,
+  score: state.player.score,
+  email: state.player.gravatarEmail,
+});
+
 Game.propTypes = {
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   dispatch: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
-export default connect()(Game);
+export default connect(mapStateToProps)(Game);
