@@ -9,13 +9,13 @@ class Feedback extends React.Component {
     const { history, dispatch } = this.props;
     history.push('/');
     dispatch(resetPlayerAction());
-  }
+  };
 
   goToRanking = () => {
     const { history, dispatch } = this.props;
     history.push('/ranking');
     dispatch(resetPlayerAction());
-  }
+  };
 
   render() {
     const { assertions, score } = this.props;
@@ -24,11 +24,23 @@ class Feedback extends React.Component {
       <div>
         <Header />
         <div data-testid="feedback-text">
-          <p data-testid="feedback-total-score">{score}</p>
-          <p data-testid="feedback-total-question">{assertions}</p>
-          {
-            assertions < three ? <h6>Could be better...</h6> : <h6>Well Done!</h6>
-          }
+          <p>
+            Your Score:
+            {' '}
+            <span data-testid="feedback-total-score">{score}</span>
+          </p>
+          <p>
+            You got
+            {' '}
+            <span data-testid="feedback-total-question">{assertions}</span>
+            {' '}
+            { assertions > 1 ? 'questions right' : 'question right'}
+          </p>
+          {assertions < three ? (
+            <h3>Could be better...</h3>
+          ) : (
+            <h3>Well Done!</h3>
+          )}
 
           <button
             data-testid="btn-play-again"

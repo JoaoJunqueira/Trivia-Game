@@ -45,7 +45,7 @@ class Ranking extends React.Component {
               <div key={ index }>
                 <img alt={ item.name } src={ this.createSrcImg(item.email) } />
                 <h3 data-testid={ `player-name-${index}` }>{ item.name }</h3>
-                <p data-testid={ `player-score-${index}` }>{ item.score }</p>
+                <p data-testid={ `player-score-${index}` }>{ `Score: ${item.score}` }</p>
               </div>
             ))
           }

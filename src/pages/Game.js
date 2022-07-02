@@ -84,8 +84,8 @@ class Game extends React.Component {
       this.shuffleArray,
     );
 
-    const quatro = 4;
-    if (index >= quatro) {
+    const four = 4;
+    if (index >= four) {
       this.savePlayersResult();
       history.push('/feedback');
     }
@@ -151,6 +151,13 @@ class Game extends React.Component {
     }
   };
 
+  // Referência: Thread aberta no Slack por Jessy Damasceno no dia 30/06
+  decodeEntity = (inputStr) => {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = inputStr;
+    return textarea.value;
+  };
+
   render() {
     const {
       results,
@@ -169,9 +176,13 @@ class Game extends React.Component {
         {results.length > 0 && (
           <div>
             <h1>Trivia</h1>
-            <p data-testid="timer-text">{timer}</p>
-            <h2 data-testid="question-text">{results[index].question}</h2>
-            <h3 data-testid="question-category">{results[index].category}</h3>
+            <p data-testid="timer-text">{`Time Left: ${timer} seconds`}</p>
+            <h2 data-testid="question-text">
+              {this.decodeEntity(results[index].question)}
+            </h2>
+            <h3 data-testid="question-category">
+              {`Category: ${results[index].category}`}
+            </h3>
             <div data-testid="answer-options">
               {sortIndex.map((ind, i) => (answers[ind] === rightAnswer ? (
                 <button
@@ -183,7 +194,7 @@ class Game extends React.Component {
                   disabled={ isButtonDisabled }
                   name="correct-answer"
                 >
-                  {answers[ind]}
+                  {this.decodeEntity(answers[ind])}
                 </button>
               ) : (
                 <button
@@ -196,7 +207,7 @@ class Game extends React.Component {
                   className={ answersResult ? 'red-border' : '' }
                   disabled={ isButtonDisabled }
                 >
-                  {answers[ind]}
+                  {this.decodeEntity(answers[ind])}
                 </button>
               )))}
               {answersResult && (
