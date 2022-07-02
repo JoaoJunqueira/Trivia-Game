@@ -119,7 +119,7 @@ describe('Cobertura de testes da tela de Game', () => {
     expect(wrongAnswer).toHaveClass('red-border');
   });
 
-  test('Verifica se ao aguardar 30 segundos todos os botões são desativados', async () => {
+  test('Verifica se ao aguardar mais de 30 segundos todos os botões são desativados', async () => {
     jest.spyOn(global, 'fetch').mockImplementation(mockFetch);
 
     const { history } = renderWithRouterAndRedux(<App />, {}, '/');
@@ -155,7 +155,7 @@ describe('Cobertura de testes da tela de Game', () => {
     expect(correctAnswer).toBeEnabled();
     expect(wrongAnswer).toBeEnabled();
 
-    jest.advanceTimersByTime(30000);
+    jest.advanceTimersByTime(31000);
 
     expect(correctAnswer).toBeDisabled();
     expect(wrongAnswer).toBeDisabled();
