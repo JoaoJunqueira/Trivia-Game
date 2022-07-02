@@ -169,7 +169,7 @@ class Game extends React.Component {
         {results.length > 0 && (
           <div>
             <h1>Trivia</h1>
-            <p>{timer}</p>
+            <p data-testid="timer-text">{timer}</p>
             <h2 data-testid="question-text">{results[index].question}</h2>
             <h3 data-testid="question-category">{results[index].category}</h3>
             <div data-testid="answer-options">

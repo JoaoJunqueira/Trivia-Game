@@ -5,6 +5,7 @@ import App from '../../App';
 import renderWithRouterAndRedux from './renderWithRouterAndRedux';
 import { questionsResponse } from '../../../cypress/mocks/questions';
 import { tokenResponse } from '../../../cypress/mocks/token';
+import 'jest-localstorage-mock';
 
 const mockFetch = (url) => {
   if (url === 'https://opentdb.com/api_token.php?command=request') {
@@ -23,7 +24,10 @@ const mockFetch = (url) => {
 };
 
 describe('Cobertura de testes da tela de Ranking', () => {
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => {
+    jest.clearAllMocks();
+    localStorage.clear();
+  });
 
   test('Verifica se as informações dos jogadores são renderizadas correstamente', async () => {
     jest.spyOn(global, 'fetch').mockImplementation(mockFetch);
@@ -132,9 +136,36 @@ describe('Cobertura de testes da tela de Ranking', () => {
   });
 
   test('Verifica se o ranking é ordenado pela pontuação', () => {
+    const localStorageMock = [
+      {
+        name: 'Tryber',
+        score: 150,
+        email: 'tryber@email.com',
+      },
+      {
+        name: 'Xablau',
+        score: 100,
+        email: 'xablau@email.com',
+      },
+      {
+        name: 'Ronaldo',
+        score: 350,
+        email: 'ronaldo@email.com'
+      },
+      {
+        name: 'Pessoa',
+        score: 100,
+        email: 'pessoa@email.com'
+      }
+    ]
+
+    localStorage.setItem('ranking', JSON.stringify(localStorageMock));
+
     renderWithRouterAndRedux(<App />, {}, '/ranking');
 
-    expect(screen.getByTestId('player-name-0')).toContainHTML('Tryber');
-    expect(screen.getByTestId('player-name-1')).toContainHTML('Xablau');
+    expect(screen.getByTestId('player-name-0')).toContainHTML('Ronaldo');
+    expect(screen.getByTestId('player-name-1')).toContainHTML('Tryber');
+    expect(screen.getByTestId('player-name-2')).toContainHTML('Xablau');
+    expect(screen.getByTestId('player-name-3')).toContainHTML('Pessoa');
   });
 });
