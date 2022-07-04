@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addPlayerInfoAction } from '../redux/actions';
+import logo from '../trivia.png' ;
+import '../Estyle/styleLogin.css';
 
 class Login extends React.Component {
   state = {
@@ -52,44 +54,55 @@ class Login extends React.Component {
   render() {
     const { button, name, email } = this.state;
     return (
-      <div>
-        <label htmlFor="name">
-          <input
-            id="name"
-            type="text"
-            data-testid="input-player-name"
-            name="name"
-            placeholder="Name"
-            onChange={ this.handleChange }
-            value={ name }
-          />
-        </label>
-        <label htmlFor="email">
-          <input
-            id="email"
-            type="email"
-            data-testid="input-gravatar-email"
-            name="email"
-            placeholder="E-mail"
-            onChange={ this.handleChange }
-            value={ email }
-          />
-        </label>
-        <button
-          data-testid="btn-play"
-          type="button"
-          disabled={ button }
-          onClick={ this.handleClickPlay }
-        >
-          Play
-        </button>
-        <button
-          data-testid="btn-settings"
-          type="button"
-          onClick={ this.handleClickSettings }
-        >
-          Settings
-        </button>
+      <div className='login'>
+        <div className='image-div'>
+          <img className='image' alt='logo' src={ logo } />
+        </div>
+        <div className='inputs'>
+          <p className='paragrafo1'>Player Name</p>
+          <label className='label' htmlFor="name">
+            <input
+              className='input-class'
+              id="name"
+              type="text"
+              data-testid="input-player-name"
+              name="name"
+              placeholder="Name"
+              onChange={ this.handleChange }
+              value={ name }
+            />
+          </label>
+          <p className='paragrafo2'>Email</p>
+          <label className='label' htmlFor="email">
+            <input
+              className='input-class'
+              id="email"
+              type="email"
+              data-testid="input-gravatar-email"
+              name="email"
+              placeholder="E-mail"
+              onChange={ this.handleChange }
+              value={ email }
+            />
+          </label>
+        </div>
+        <div className='buttons'>
+          <button
+            data-testid="btn-play"
+            type="button"
+            disabled={ button }
+            onClick={ this.handleClickPlay }
+          >
+            Play
+          </button>
+          <button
+            data-testid="btn-settings"
+            type="button"
+            onClick={ this.handleClickSettings }
+          >
+            Settings
+          </button>
+        </div>
       </div>
     );
   }

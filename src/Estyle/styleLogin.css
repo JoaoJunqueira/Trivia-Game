@@ -1,0 +1,56 @@
+.image-div {
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  background-color: #1d5d9b;
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  width: 400px;
+  margin-top: 150px;
+  margin-bottom: 50px;
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10%;
+}
+
+.label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.input-class {
+  border-radius: 5px;
+}
+
+.buttons {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.paragrafo1 {
+  color: whitesmoke;
+  margin-top: auto;
+  margin-bottom: 5px;
+  text-align: center;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.paragrafo2 {
+    color: whitesmoke;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
