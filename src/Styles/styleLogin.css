@@ -5,21 +5,32 @@
 
 body {
   background-color: #1d5d9b;
+}
+
+.login-container {
+  align-items: center;
   display: flex;
   justify-content: center;
+}
+
+.login {
+  background-color: #092b5a;
+  border-radius: 5px;
+  padding: 20px;
+  width: 500px;
 }
 
 .image {
-  width: 400px;
-  margin-top: 150px;
   margin-bottom: 50px;
+  margin-top: 150px;
+  width: 400px;
 }
 
 .inputs {
+  border-radius: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 10%;
 }
 
 .label {
@@ -30,44 +41,44 @@ body {
 
 .input-class {
   border-radius: 5px;
+  font-size: 18px;
   padding: 7px;
   width: 100%;
-  font-size: 18px;
 }
 
 .buttons {
-  text-align: center;
   margin-top: 20px;
+  text-align: center;
 }
 
 .paragrafo1 {
-  color: whitesmoke;
-  margin-top: auto;
-  margin-bottom: 5px;
-  text-align: center;
-  font-size: 20px;
-  font-family: Arial, Helvetica, sans-serif;
   align-self: start;
+  color: whitesmoke;
+  font-family: Arial , Helvetica , sans-serif;
+  font-size: 20px;
+  margin-bottom: 5px;
+  margin-top: auto;
+  text-align: center;
 }
 
 .paragrafo2 {
-  color: whitesmoke;
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-size: 20px;
-  font-family: Arial, Helvetica, sans-serif;
   align-self: start;
+  color: whitesmoke;
+  font-family: Arial , Helvetica , sans-serif;
+  font-size: 20px;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .btn {
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  margin-bottom: 7px;
   padding: 10px;
   width: 100%;
-  font-size: 18px;
-  border-radius: 5px;
-  margin-bottom: 7px;
-  cursor: pointer;
-  color: white;
 }
 
 .btn-settings {
@@ -75,7 +86,7 @@ body {
 }
 
 .btn-play {
-  background-color: #006666;
+  background-color: #066;
 }
 
 .btn-play:disabled {

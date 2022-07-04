@@ -14,7 +14,7 @@ class Header extends React.Component {
 
     return (
       <div>
-        <header>
+        <header className="header-container">
           <img
             data-testid="header-profile-picture"
             src={ this.createSrcImg(email) }

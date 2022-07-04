@@ -54,56 +54,58 @@ class Login extends React.Component {
   render() {
     const { button, name, email } = this.state;
     return (
-      <div className="login">
-        <div className="image-div">
-          <img className="image" alt="logo" src={ logo } />
-        </div>
-        <div className="inputs">
-          <p className="paragrafo1">Player Name:</p>
-          <label className="label" htmlFor="name">
-            <input
-              className="input-class"
-              id="name"
-              type="text"
-              data-testid="input-player-name"
-              name="name"
-              placeholder="Name"
-              onChange={ this.handleChange }
-              value={ name }
-            />
-          </label>
-          <p className="paragrafo2">Email:</p>
-          <label className="label" htmlFor="email">
-            <input
-              className="input-class"
-              id="email"
-              type="email"
-              data-testid="input-gravatar-email"
-              name="email"
-              placeholder="E-mail"
-              onChange={ this.handleChange }
-              value={ email }
-            />
-          </label>
-        </div>
-        <div className="buttons">
-          <button
-            data-testid="btn-play"
-            type="button"
-            disabled={ button }
-            onClick={ this.handleClickPlay }
-            className="btn btn-play"
-          >
-            Play
-          </button>
-          <button
-            data-testid="btn-settings"
-            type="button"
-            onClick={ this.handleClickSettings }
-            className="btn btn-settings"
-          >
-            Settings
-          </button>
+      <div className="login-container">
+        <div className="login">
+          <div className="image-div">
+            <img className="image" alt="logo" src={ logo } />
+          </div>
+          <div className="inputs">
+            <p className="paragrafo1">Player Name:</p>
+            <label className="label" htmlFor="name">
+              <input
+                className="input-class"
+                id="name"
+                type="text"
+                data-testid="input-player-name"
+                name="name"
+                placeholder="Name"
+                onChange={ this.handleChange }
+                value={ name }
+              />
+            </label>
+            <p className="paragrafo2">Email:</p>
+            <label className="label" htmlFor="email">
+              <input
+                className="input-class"
+                id="email"
+                type="email"
+                data-testid="input-gravatar-email"
+                name="email"
+                placeholder="E-mail"
+                onChange={ this.handleChange }
+                value={ email }
+              />
+            </label>
+          </div>
+          <div className="buttons">
+            <button
+              data-testid="btn-play"
+              type="button"
+              disabled={ button }
+              onClick={ this.handleClickPlay }
+              className="btn btn-play"
+            >
+              Play
+            </button>
+            <button
+              data-testid="btn-settings"
+              type="button"
+              onClick={ this.handleClickSettings }
+              className="btn btn-settings"
+            >
+              Settings
+            </button>
+          </div>
         </div>
       </div>
     );
