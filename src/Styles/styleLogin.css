@@ -30,11 +30,14 @@ body {
 
 .input-class {
   border-radius: 5px;
+  padding: 7px;
+  width: 100%;
+  font-size: 18px;
 }
 
 .buttons {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .paragrafo1 {
@@ -44,13 +47,37 @@ body {
   text-align: center;
   font-size: 20px;
   font-family: Arial, Helvetica, sans-serif;
+  align-self: start;
 }
 
 .paragrafo2 {
-    color: whitesmoke;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 5px;
-    font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-  }
+  color: whitesmoke;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  align-self: start;
+}
+
+.btn {
+  padding: 10px;
+  width: 100%;
+  font-size: 18px;
+  border-radius: 5px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  color: white;
+}
+
+.btn-settings {
+  background-color: #606d80;
+}
+
+.btn-play {
+  background-color: #006666;
+}
+
+.btn-play:disabled {
+  background-color: #4d8f81;
+}
