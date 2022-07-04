@@ -84,8 +84,8 @@ class Game extends React.Component {
       this.shuffleArray,
     );
 
-    const quatro = 4;
-    if (index >= quatro) {
+    const four = 4;
+    if (index >= four) {
       this.savePlayersResult();
       history.push('/feedback');
     }
@@ -95,7 +95,9 @@ class Game extends React.Component {
     const { name, score, email } = this.props;
     const localStorageData = localStorage.getItem('ranking');
     const player = {
-      name, score, email,
+      name,
+      score,
+      email,
     };
     if (!localStorageData) {
       const playerJson = JSON.stringify([player]);
@@ -107,7 +109,7 @@ class Game extends React.Component {
       const finalRanking = JSON.stringify(newRanking);
       localStorage.setItem('ranking', finalRanking);
     }
-  }
+  };
 
   countdownTimer = () => {
     const ONE_SECOND = 1000;
@@ -139,15 +141,22 @@ class Game extends React.Component {
     const medium = 2;
     const hard = 3;
     if (difficulty === 'hard') {
-      return ten + (timer * hard);
+      return ten + timer * hard;
     }
     if (difficulty === 'medium') {
-      return ten + (timer * medium);
+      return ten + timer * medium;
     }
     if (difficulty === 'easy') {
-      return ten + (timer * easy);
+      return ten + timer * easy;
     }
-  }
+  };
+
+  // Referência: Thread aberta no Slack por Jessy Damasceno no dia 30/06
+  decodeEntity = (inputStr) => {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = inputStr;
+    return textarea.value;
+  };
 
   render() {
     const {
@@ -167,9 +176,13 @@ class Game extends React.Component {
         {results.length > 0 && (
           <div>
             <h1>Trivia</h1>
-            <p>{timer}</p>
-            <h2 data-testid="question-text">{results[index].question}</h2>
-            <h3 data-testid="question-category">{results[index].category}</h3>
+            <p data-testid="timer-text">{`Time Left: ${timer} seconds`}</p>
+            <h2 data-testid="question-text">
+              {this.decodeEntity(results[index].question)}
+            </h2>
+            <h3 data-testid="question-category">
+              {`Category: ${results[index].category}`}
+            </h3>
             <div data-testid="answer-options">
               {sortIndex.map((ind, i) => (answers[ind] === rightAnswer ? (
                 <button
@@ -181,18 +194,20 @@ class Game extends React.Component {
                   disabled={ isButtonDisabled }
                   name="correct-answer"
                 >
-                  {answers[ind]}
+                  {this.decodeEntity(answers[ind])}
                 </button>
               ) : (
                 <button
-                  data-testid={ `wrong-answer-${i}` }
+                  data-testid={ `wrong-answer-${results[
+                    index
+                  ].incorrect_answers.indexOf(answers[ind])}` }
                   key={ i }
                   type="button"
                   onClick={ this.handleClick }
                   className={ answersResult ? 'red-border' : '' }
                   disabled={ isButtonDisabled }
                 >
-                  {answers[ind]}
+                  {this.decodeEntity(answers[ind])}
                 </button>
               )))}
               {answersResult && (

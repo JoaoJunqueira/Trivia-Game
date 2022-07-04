@@ -21,7 +21,11 @@ class Header extends React.Component {
             alt="Imagem do usuário"
           />
           <p data-testid="header-player-name">{name}</p>
-          <p data-testid="header-score">{score}</p>
+          <p>
+            Score:
+            {' '}
+            <span data-testid="header-score">{score}</span>
+          </p>
         </header>
       </div>
     );

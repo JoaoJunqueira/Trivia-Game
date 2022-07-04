@@ -3,19 +3,28 @@ import renderWithRouterAndRedux from './renderWithRouterAndRedux';
 import App from '../../App';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { questionsResponse } from '../../../cypress/mocks/questions';
+import { tokenResponse } from '../../../cypress/mocks/token';
 
-const initialState = {
-  player: {
-    name: '',
-    email: '',
-  },
-};
+const mockFetch = (url) => {
+  if (url === 'https://opentdb.com/api_token.php?command=request'){
+    return Promise.resolve({
+      json: () => Promise.resolve(tokenResponse)
+    })
+  }
+
+  if (url === `https://opentdb.com/api.php?amount=5&token=${tokenResponse.token}`){
+    return Promise.resolve({
+      json: () => Promise.resolve(questionsResponse)
+    })
+  }
+}
 
 describe('Cobertura de testes da tela de Login', () => {
   afterEach(() => jest.clearAllMocks());
 
   test('Verifica se os campos de input são renderizados corretamente', () => {
-    renderWithRouterAndRedux(<App />, initialState, '/');
+    renderWithRouterAndRedux(<App />, {}, '/');
 
     const inputName = screen.getByPlaceholderText('Name');
     const inputEmail = screen.getByPlaceholderText('E-mail');
@@ -25,7 +34,7 @@ describe('Cobertura de testes da tela de Login', () => {
   });
 
   test("Verifica se ao digitar nos campos de input o botão 'Play' é habilitado", () => {
-    renderWithRouterAndRedux(<App />, initialState, '/');
+    renderWithRouterAndRedux(<App />, {}, '/');
 
     const inputName = screen.getByPlaceholderText('Name');
     const inputEmail = screen.getByPlaceholderText('E-mail');
@@ -40,7 +49,7 @@ describe('Cobertura de testes da tela de Login', () => {
   });
 
   test("Verifica se ao clicar no botão 'Play' o usuário é redirecionado para a página do jogo", async () => {
-    const { history } = renderWithRouterAndRedux(<App />, initialState, '/');
+    const { history } = renderWithRouterAndRedux(<App />, {}, '/');
 
     const inputName = screen.getByPlaceholderText('Name');
     const inputEmail = screen.getByPlaceholderText('E-mail');
@@ -54,7 +63,7 @@ describe('Cobertura de testes da tela de Login', () => {
   });
 
   test("Verifica se ao clicar no botão 'Settings' o usuário é redirecionado para a página de configurações", async () => {
-    const { history } = renderWithRouterAndRedux(<App />, initialState, '/');
+    const { history } = renderWithRouterAndRedux(<App />, {}, '/');
 
     const inputName = screen.getByPlaceholderText('Name');
     const inputEmail = screen.getByPlaceholderText('E-mail');
@@ -70,17 +79,9 @@ describe('Cobertura de testes da tela de Login', () => {
   test("Verifica se ao clicar no botão 'Play' é feita uma requisição a API", async () => {
     const url = 'https://opentdb.com/api_token.php?command=request';
 
-    const tokenData = {
-      response_code: 0,
-      response_message: 'Token Generated Successfully!',
-      token: 'f00cb469ce38726ee00a7c6836761b0a4fb808181a125dcde6d50a9f3c9127b6',
-    };
+    jest.spyOn(global, 'fetch').mockImplementation(mockFetch);
 
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue(tokenData),
-    });
-
-    renderWithRouterAndRedux(<App />, initialState, '/');
+    renderWithRouterAndRedux(<App />, {}, '/');
 
     const inputName = screen.getByPlaceholderText('Name');
     const inputEmail = screen.getByPlaceholderText('E-mail');
@@ -97,17 +98,10 @@ describe('Cobertura de testes da tela de Login', () => {
   });
 
   test('Verifica se o token recebido da API é salvo no localStorage', () => {
-    const tokenData = {
-      response_code: 0,
-      response_message: 'Token Generated Successfully!',
-      token: 'f00cb469ce38726ee00a7c6836761b0a4fb808181a125dcde6d50a9f3c9127b6',
-    };
 
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      json: jest.fn().mockResolvedValue(tokenData),
-    });
+    jest.spyOn(global, 'fetch').mockImplementation(mockFetch);
 
-    renderWithRouterAndRedux(<App />, initialState, '/');
+    renderWithRouterAndRedux(<App />, {}, '/');
 
     const inputName = screen.getByPlaceholderText('Name');
     const inputEmail = screen.getByPlaceholderText('E-mail');
@@ -118,6 +112,6 @@ describe('Cobertura de testes da tela de Login', () => {
     userEvent.click(buttonPlay);
 
     const localStorageItem = localStorage.getItem('token');
-    expect(localStorageItem).toBe(tokenData.token);
+    expect(localStorageItem).toBe(tokenResponse.token);
   });
 });
