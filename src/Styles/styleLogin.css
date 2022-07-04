@@ -11,18 +11,20 @@ body {
   align-items: center;
   display: flex;
   justify-content: center;
+  min-height: 100vh;
 }
 
 .login {
   background-color: #092b5a;
-  border-radius: 5px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 20px 0px rgba(0,0,0,1);
   padding: 20px;
   width: 500px;
 }
 
 .image {
   margin-bottom: 50px;
-  margin-top: 150px;
+  margin-top: 50px;
   width: 400px;
 }
 
@@ -72,7 +74,8 @@ body {
 }
 
 .btn {
-  border-radius: 5px;
+  border: none;
+  border-radius: 10px;
   color: white;
   cursor: pointer;
   font-size: 18px;
@@ -91,4 +94,5 @@ body {
 
 .btn-play:disabled {
   background-color: #4d8f81;
+  cursor: not-allowed;
 }
