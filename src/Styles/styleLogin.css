@@ -85,14 +85,14 @@ body {
 }
 
 .btn-settings {
-  background-color: #606d80;
+  background-color: #f26c4f;
 }
 
 .btn-play {
-  background-color: #066;
+  background-color:#3a89c9;
 }
 
 .btn-play:disabled {
-  background-color: #4d8f81;
+  opacity: 0.4;
   cursor: not-allowed;
 }

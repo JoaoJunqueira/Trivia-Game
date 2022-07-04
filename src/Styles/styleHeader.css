@@ -1,0 +1,26 @@
+.header-container {
+  background-color: #092b5a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 125px;
+  color: white;
+  font-size: 22px;
+}
+
+.img-name-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 40px;
+
+}
+
+.img-name-container img{
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.header-container p {
+  margin-right: 40px;
+}
