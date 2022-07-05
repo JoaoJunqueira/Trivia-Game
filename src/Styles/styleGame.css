@@ -25,15 +25,8 @@
   opacity: 0.4;
 }
 
-.game-container .green-border {
-  background-color: rgb(6, 240, 15);
-  border: 3px solid rgb(6, 240, 15);
-  color: white;
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
 .game-container button {
+  border: 3px solid black;
   border-radius: 10px;
   cursor: pointer;
   font-size: 18px;
@@ -42,8 +35,54 @@
   width: 80%;
 }
 
+.game-container .green-border {
+  background-color: rgb(6, 240, 15);
+  border: 3px solid rgb(6, 240, 15);
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
 .game-container .btn-next {
   background-color: #9cc4e4;
   border: none;
   width: 80%;
+}
+
+.timer-category-container {
+  align-items: center;
+  background-color: #c1c9c8;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  width: 70%;
+}
+
+.game-card {
+  background-color: #949a8e;
+  border-radius: 10px;
+  box-shadow: 5px 5px 20px 0 rgba(0, 0, 0, 0.8);
+  margin-top: 20px;
+  padding: 15px 0;
+  width: 70%;
+}
+
+.timer-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.answers-container {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.answers-container button {
+  width: 45%;
 }

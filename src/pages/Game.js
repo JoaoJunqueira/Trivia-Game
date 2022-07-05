@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { sumScoreAction } from '../redux/actions/index';
 import logo from '../trivia.png';
+import timerImg from '../timer.png';
 import '../Styles/styleGame.css';
 
 class Game extends React.Component {
@@ -26,7 +27,6 @@ class Game extends React.Component {
       `https://opentdb.com/api.php?amount=5&token=${token}`,
     );
     const data = await response.json();
-
     if (data.response_code === 0) {
       this.setState({
         results: data.results,
@@ -39,7 +39,6 @@ class Game extends React.Component {
       localStorage.removeItem('token');
       history.push('/');
     }
-
     this.shuffleArray();
     this.countdownTimer();
   }
@@ -48,14 +47,11 @@ class Game extends React.Component {
     const { answers } = this.state;
     const num = 0.5;
     const array = [];
-
     for (let i = 0; i < answers.length; i += 1) {
       array.push(i);
     }
-
     // Referência: https://flaviocopes.com/how-to-shuffle-array-javascript/
     const sortIndex = array.sort(() => Math.random() - num);
-
     this.setState({ sortIndex });
   };
 
@@ -115,7 +111,6 @@ class Game extends React.Component {
 
   countdownTimer = () => {
     const ONE_SECOND = 1000;
-
     setInterval(
       () => this.setState(
         (prevState) => ({
@@ -178,40 +173,47 @@ class Game extends React.Component {
         {results.length > 0 && (
           <div className="game-container">
             <img className="image-game" alt="logo" src={ logo } />
-            <p data-testid="timer-text">{`Time Left: ${timer} seconds`}</p>
-            <h2 data-testid="question-text">
-              {this.decodeEntity(results[index].question)}
-            </h2>
-            <h3 data-testid="question-category">
-              {`Category: ${results[index].category}`}
-            </h3>
-            <div data-testid="answer-options">
-              {sortIndex.map((ind, i) => (answers[ind] === rightAnswer ? (
-                <button
-                  data-testid="correct-answer"
-                  key={ i }
-                  type="button"
-                  onClick={ this.handleClick }
-                  className={ answersResult ? 'green-border' : '' }
-                  disabled={ isButtonDisabled }
-                  name="correct-answer"
-                >
-                  {this.decodeEntity(answers[ind])}
-                </button>
-              ) : (
-                <button
-                  data-testid={ `wrong-answer-${results[
-                    index
-                  ].incorrect_answers.indexOf(answers[ind])}` }
-                  key={ i }
-                  type="button"
-                  onClick={ this.handleClick }
-                  className={ answersResult ? 'red-border' : '' }
-                  disabled={ isButtonDisabled }
-                >
-                  {this.decodeEntity(answers[ind])}
-                </button>
-              )))}
+            <div className="timer-category-container">
+              <div className="timer-container">
+                <img src={ timerImg } alt="timer" />
+                <p data-testid="timer-text">{`${timer} seconds`}</p>
+              </div>
+              <h3 data-testid="question-category">
+                {`Category: ${results[index].category}`}
+              </h3>
+            </div>
+            <div className="game-card">
+              <h2 data-testid="question-text">
+                {this.decodeEntity(results[index].question)}
+              </h2>
+              <div data-testid="answer-options" className="answers-container">
+                {sortIndex.map((ind, i) => (answers[ind] === rightAnswer ? (
+                  <button
+                    data-testid="correct-answer"
+                    key={ i }
+                    type="button"
+                    onClick={ this.handleClick }
+                    className={ answersResult ? 'green-border' : '' }
+                    disabled={ isButtonDisabled }
+                    name="correct-answer"
+                  >
+                    {this.decodeEntity(answers[ind])}
+                  </button>
+                ) : (
+                  <button
+                    data-testid={ `wrong-answer-${results[
+                      index
+                    ].incorrect_answers.indexOf(answers[ind])}` }
+                    key={ i }
+                    type="button"
+                    onClick={ this.handleClick }
+                    className={ answersResult ? 'red-border' : '' }
+                    disabled={ isButtonDisabled }
+                  >
+                    {this.decodeEntity(answers[ind])}
+                  </button>
+                )))}
+              </div>
               {answersResult && (
                 <button
                   data-testid="btn-next"
