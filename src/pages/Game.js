@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { sumScoreAction } from '../redux/actions/index';
+import logo from '../trivia.png';
+import '../Styles/styleGame.css';
 
 class Game extends React.Component {
   state = {
@@ -174,8 +176,8 @@ class Game extends React.Component {
       <div>
         <Header />
         {results.length > 0 && (
-          <div>
-            <h1>Trivia</h1>
+          <div className="game-container">
+            <img className="image-game" alt="logo" src={ logo } />
             <p data-testid="timer-text">{`Time Left: ${timer} seconds`}</p>
             <h2 data-testid="question-text">
               {this.decodeEntity(results[index].question)}
@@ -215,6 +217,7 @@ class Game extends React.Component {
                   data-testid="btn-next"
                   type="button"
                   onClick={ this.handleClickNext }
+                  className="btn-next"
                 >
                   Next
                 </button>
