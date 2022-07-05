@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { resetPlayerAction } from '../redux/actions';
+import brainhappy from '../brainhappy.png';
+import brainsad from '../brainsad.png';
 import '../Styles/styleFeedback.css';
 
 class Feedback extends React.Component {
@@ -39,9 +41,15 @@ class Feedback extends React.Component {
               {assertions > 1 ? 'questions right' : 'question right'}
             </p>
             {assertions < three ? (
-              <h3>Could be better...</h3>
+              <>
+                <img src={ brainsad } alt="cérebro triste" />
+                <h3>Could be better...</h3>
+              </>
             ) : (
-              <h3>Well Done!</h3>
+              <>
+                <img src={ brainhappy } alt="cérebro feliz" />
+                <h3>Well Done!</h3>
+              </>
             )}
 
             <button
