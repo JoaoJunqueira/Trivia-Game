@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import md5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
+import '../Styles/styleHeader.css';
 
 class Header extends React.Component {
   createSrcImg = (email) => {
@@ -14,13 +15,15 @@ class Header extends React.Component {
 
     return (
       <div>
-        <header>
-          <img
-            data-testid="header-profile-picture"
-            src={ this.createSrcImg(email) }
-            alt="Imagem do usuário"
-          />
-          <p data-testid="header-player-name">{name}</p>
+        <header className="header-container">
+          <div className="img-name-container">
+            <img
+              data-testid="header-profile-picture"
+              src={ this.createSrcImg(email) }
+              alt="Imagem do usuário"
+            />
+            <p data-testid="header-player-name">{name}</p>
+          </div>
           <p>
             Score:
             {' '}
